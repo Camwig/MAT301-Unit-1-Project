@@ -13,18 +13,35 @@ public class FuzzyBox : MonoBehaviour
 	LinguisticVariable distance_X;
 	LinguisticVariable direction_X;
 
+	//-----------------------------
+	LinguisticVariable Avoidance_direction_X;
+	LinguisticVariable Avoidance_distance_X;
+	//-----------------------------
+
 	IFuzzyEngine engineZ;
 	LinguisticVariable distance_Z;
 	LinguisticVariable direction_Z;
+
+	//-----------------------------
+	LinguisticVariable Avoidance_direction_Z;
+	LinguisticVariable Avoidance_distance_Z;
+	//-----------------------------
 
 	public GameObject Centre;
 	private float Centre_x;
 	private float Centre_z;
 
+	public GameObject Obstacle;
+	private float Obstacle_X;
+	private float Obstacle_Z;
+
 	void Start()
 	{
 		Centre_x = Centre.transform.position.x;
+		Centre_z = Centre.transform.position.z;
 
+		Obstacle_X = Obstacle.transform.position.x;
+		Obstacle_Z = Obstacle.transform.position.z;
 
 		/*var right = distance.MembershipFunctions.AddTrapezoid("right", -50, -50, -5, -1);
 		var none = distance.MembershipFunctions.AddTrapezoid("none", -5, -0.5, 0.5, 5);
@@ -41,15 +58,23 @@ public class FuzzyBox : MonoBehaviour
 		var none_direction_X = direction_X.MembershipFunctions.AddTrapezoid("none_direction_X", Centre_x + -10, Centre_x + -0.5, Centre_x + 0.5, Centre_x + 10);
 		var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Centre_x + 1, Centre_x + 10, Centre_x + 75, Centre_x + 75);
 
+		//-----------------------------
+
+		//Will probably need to map out a new graph and values to allow for the player to act normal
+		//Will see how using the distance values work if we change the rules so that we move away from it rather than moving towards it
+
+		Avoidance_direction_X = new LinguisticVariable("Avoidance_directionX");
+		var right_avoidance_direction_x = Avoidance_direction_X.MembershipFunctions.AddTrapezoid("right_avoidance_directionX", Obstacle_X + -75, Obstacle_X + -75, Obstacle_X + -5, Obstacle_X + -1);
+		var left_avoidance_direction_x = Avoidance_direction_X.MembershipFunctions.AddTrapezoid("left_avoidance_directionX", Obstacle_X + 1, Obstacle_X + 10, Obstacle_X + 75, Obstacle_X + 75);
+		//-----------------------------
+
 		engineX = new FuzzyEngineFactory().Default();
 
 		var rule1_X = Rule.If(distance_X.Is(right_X)).Then(direction_X.Is(left_direction_X));
 		var rule2_X = Rule.If(distance_X.Is(left_X)).Then(direction_X.Is(right_direction_X));
 		var rule3_X = Rule.If(distance_X.Is(none_X)).Then(direction_X.Is(none_direction_X));
 
-		engineX.Rules.Add(rule1_X, rule2_X, rule3_X);		
-
-		Centre_z = Centre.transform.position.z;
+		engineX.Rules.Add(rule1_X, rule2_X, rule3_X);
 
 		// Here we need to setup the Fuzzy Inference System
 		distance_Z = new LinguisticVariable("distanceZ");
@@ -73,10 +98,10 @@ public class FuzzyBox : MonoBehaviour
 
 	void FixedUpdate()
 	{
-        //if(!selected && this.transform.position.y < 0.6f)
-        //{
-        // Convert position of box to value between 0 and 100
-        double resultX = 0.0;
+        if (!selected && this.transform.position.y < 0.6f)
+        {
+            // Convert position of box to value between 0 and 100
+            double resultX = 0.0;
         double resultZ = 0.0;
 
 		double speed_ = 1.0;
@@ -91,7 +116,7 @@ public class FuzzyBox : MonoBehaviour
 
 		Rigidbody rigidbody = GetComponent<Rigidbody>();
         rigidbody.AddForce(new Vector3((float)(resultX * speed_), 0f, (float)(resultZ * speed_)));
-        //}
+        }
     }
 
     // Update is called once per frame
