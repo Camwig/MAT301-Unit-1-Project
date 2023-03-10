@@ -14,7 +14,13 @@ public class FuzzyBox : MonoBehaviour
 	LinguisticVariable direction_X;
 
 	//-----------------------------
-	LinguisticVariable Avoidance_direction_X;
+
+	//Try initialy with only distance for avoidance and we can then
+	//see later if direcion is needed.
+
+	//LinguisticVariable Avoidance_direction_X;
+
+	IFuzzyEngine avoidEngine;
 	LinguisticVariable Avoidance_distance_X;
 	//-----------------------------
 
@@ -23,7 +29,7 @@ public class FuzzyBox : MonoBehaviour
 	LinguisticVariable direction_Z;
 
 	//-----------------------------
-	LinguisticVariable Avoidance_direction_Z;
+	//LinguisticVariable Avoidance_direction_Z;
 	LinguisticVariable Avoidance_distance_Z;
 	//-----------------------------
 
@@ -55,17 +61,18 @@ public class FuzzyBox : MonoBehaviour
 
 		direction_X = new LinguisticVariable("directionX");
 		var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Centre_x + -75, Centre_x + -75, Centre_x + -5, Centre_x + -1);
+		//Below is a problem line
 		var none_direction_X = direction_X.MembershipFunctions.AddTrapezoid("none_direction_X", Centre_x + -10, Centre_x + -0.5, Centre_x + 0.5, Centre_x + 10);
+		//
 		var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Centre_x + 1, Centre_x + 10, Centre_x + 75, Centre_x + 75);
 
 		//-----------------------------
-
 		//Will probably need to map out a new graph and values to allow for the player to act normal
 		//Will see how using the distance values work if we change the rules so that we move away from it rather than moving towards it
 
-		Avoidance_direction_X = new LinguisticVariable("Avoidance_directionX");
-		var right_avoidance_direction_x = Avoidance_direction_X.MembershipFunctions.AddTrapezoid("right_avoidance_directionX", Obstacle_X + -75, Obstacle_X + -75, Obstacle_X + -5, Obstacle_X + -1);
-		var left_avoidance_direction_x = Avoidance_direction_X.MembershipFunctions.AddTrapezoid("left_avoidance_directionX", Obstacle_X + 1, Obstacle_X + 10, Obstacle_X + 75, Obstacle_X + 75);
+		//Avoidance_distance_X = new LinguisticVariable("Avoidance_distanceX");
+		//var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -75, Obstacle_X + -75, Obstacle_X + -5, Obstacle_X + -1);
+		//var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 1, Obstacle_X + 10, Obstacle_X + 75, Obstacle_X + 75);
 		//-----------------------------
 
 		engineX = new FuzzyEngineFactory().Default();
@@ -74,10 +81,39 @@ public class FuzzyBox : MonoBehaviour
 		var rule2_X = Rule.If(distance_X.Is(left_X)).Then(direction_X.Is(right_direction_X));
 		var rule3_X = Rule.If(distance_X.Is(none_X)).Then(direction_X.Is(none_direction_X));
 
-		engineX.Rules.Add(rule1_X, rule2_X, rule3_X);
+		//-----------------------------
+		//var rule4_X = Rule.If(Avoidance_distance_X.Is(right_avoidance_distance_x)).Then(direction_X.Is(right_direction_X));
+		//var rule5_X = Rule.If(Avoidance_distance_X.Is(left_avoidance_distance_x)).Then(direction_X.Is(left_direction_X));
+		//-----------------------------
 
-		// Here we need to setup the Fuzzy Inference System
-		distance_Z = new LinguisticVariable("distanceZ");
+		engineX.Rules.Add(rule1_X, rule2_X, rule3_X);
+        //engineX.Rules.Add(rule1_X, rule2_X, rule3_X,rule4_X,rule5_X);
+
+        //Issues adding rules to the engine for some reason.
+
+        //engineX.Rules.Add(rule4_X, rule5_X);
+
+
+        //-----------------------------
+
+        Avoidance_distance_X = new LinguisticVariable("Avoidance_distanceX");
+        var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -75, Obstacle_X + -75, Obstacle_X + -5, Obstacle_X + -1);
+        var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 1, Obstacle_X + 10, Obstacle_X + 75, Obstacle_X + 75);
+
+
+		avoidEngine = new FuzzyEngineFactory().Default();
+
+        var rule4_X = Rule.If(Avoidance_distance_X.Is(right_avoidance_distance_x)).Then(direction_X.Is(right_direction_X));
+        var rule5_X = Rule.If(Avoidance_distance_X.Is(left_avoidance_distance_x)).Then(direction_X.Is(left_direction_X));
+
+		avoidEngine.Rules.Add(rule4_X, rule5_X);
+
+        //-----------------------------
+
+
+
+        // Here we need to setup the Fuzzy Inference System
+        distance_Z = new LinguisticVariable("distanceZ");
 		var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Centre_z - 50, Centre_z - 50, Centre_z - 5, Centre_z - 1);
 		var none_Z = distance_Z.MembershipFunctions.AddTrapezoid("none_Y", Centre_z - 5, Centre_z - 0.5, Centre_z + 0.5, Centre_z + 5);
 		var left_Z = distance_Z.MembershipFunctions.AddTrapezoid("left_Y", Centre_z + 1, Centre_z + 5, Centre_z + 50, Centre_z + 50);
@@ -101,21 +137,25 @@ public class FuzzyBox : MonoBehaviour
         if (!selected && this.transform.position.y < 0.6f)
         {
             // Convert position of box to value between 0 and 100
-            double resultX = 0.0;
-        double resultZ = 0.0;
+			double resultX = 0.0;
+			double resultZ = 0.0;
 
-		double speed_ = 1.0;
+			double new_result = 0.0;
 
-		resultX = engineX.Defuzzify(new { distanceX = (double)this.transform.position.x });
+			double speed_ = 1.0;
 
-        resultZ = engineZ.Defuzzify(new { distanceZ = (double)this.transform.position.z });
+			resultX = engineX.Defuzzify(new { distanceX = (double)this.transform.position.x });
 
-		Debug.Log("Result X : " + resultX);
-		Debug.Log("Result Z : " + resultZ);
-		//Debug.Log(speed_result_z);
+			new_result = avoidEngine.Defuzzify(new { Avoidance_distanceX = (double)this.transform.position.x });
 
-		Rigidbody rigidbody = GetComponent<Rigidbody>();
-        rigidbody.AddForce(new Vector3((float)(resultX * speed_), 0f, (float)(resultZ * speed_)));
+			resultZ = engineZ.Defuzzify(new { distanceZ = (double)this.transform.position.z });
+
+			Debug.Log("Result X : " + resultX);
+			Debug.Log("Result Z : " + resultZ);
+			//Debug.Log(speed_result_z);
+
+			Rigidbody rigidbody = GetComponent<Rigidbody>();
+			rigidbody.AddForce(new Vector3((float)(resultX * speed_), 0f, (float)(resultZ * speed_)));
         }
     }
 

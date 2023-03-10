@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Centre: {fileID: 1927129409}
+  Obstacle: {fileID: 1026879711}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
