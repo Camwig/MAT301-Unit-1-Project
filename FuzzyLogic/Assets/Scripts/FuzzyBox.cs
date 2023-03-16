@@ -45,6 +45,9 @@ public class FuzzyBox : MonoBehaviour
 	private float Obstacle_X;
 	private float Obstacle_Z;
 
+	private float Obstacle_X1;
+	private float Obstacle_Z1;
+
 	private int[] array;
 
 	[SerializeField]
@@ -232,7 +235,7 @@ public class FuzzyBox : MonoBehaviour
 		//go from zero and at the start of the update if the value of the array we are checking is ever greater than the size of the array we reset it back to zero.
 
 
-		if(array_pos >= obstacle_array.Count)
+		if(array_pos > obstacle_array.Count - 1)
         {
 			array_pos = 0;
         }
@@ -242,8 +245,8 @@ public class FuzzyBox : MonoBehaviour
 		Centre_x = Centre.transform.position.x;
 		Centre_z = Centre.transform.position.z;
 
-		Obstacle_X = obstacle_array[array_pos].transform.position.x;
-		Obstacle_Z = obstacle_array[array_pos].transform.position.z;
+		Obstacle_X1 = obstacle_array[array_pos].transform.position.x;
+		Obstacle_Z1 = obstacle_array[array_pos].transform.position.z;
 
 		//Obstacle_X = Obstacle.transform.position.x;
 		//Obstacle_Z = Obstacle.transform.position.z;
@@ -296,8 +299,8 @@ public class FuzzyBox : MonoBehaviour
         //-----------------------------
 
         Avoidance_distance_X = new LinguisticVariable("Avoidance_distanceX");
-        var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -12.5, Obstacle_X + -12.5, Obstacle_X + -5, Obstacle_X + -1);
-        var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + 12.5, Obstacle_X + 12.5);
+        var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X1 + -12.5, Obstacle_X1 + -12.5, Obstacle_X1 + -5, Obstacle_X1 + -1);
+        var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X1 + 0.25, Obstacle_X1 + 1.25, Obstacle_X1 + 12.5, Obstacle_X1 + 12.5);
 
 
 		avoidEngineX = new FuzzyEngineFactory().Default();
@@ -331,8 +334,8 @@ public class FuzzyBox : MonoBehaviour
 		//-----------------------------
 
 		Avoidance_distance_Z = new LinguisticVariable("Avoidance_distanceZ");
-		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -12.5, Obstacle_Z + -12.5, Obstacle_Z + -5, Obstacle_Z + -1);
-		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + 12.5, Obstacle_Z + 12.5);
+		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z1 + -12.5, Obstacle_Z1 + -12.5, Obstacle_Z1 + -5, Obstacle_Z1 + -1);
+		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z1 + 0.25, Obstacle_Z1 + 1.25, Obstacle_Z1 + 12.5, Obstacle_Z1 + 12.5);
 
 		avoidEngineZ = new FuzzyEngineFactory().Default();
 
