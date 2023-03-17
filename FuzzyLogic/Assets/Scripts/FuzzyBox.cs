@@ -1,5 +1,6 @@
 ﻿using FLS;
 using FLS.Rules;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +38,9 @@ public class FuzzyBox : MonoBehaviour
 	double new_result_X;
 	double new_result_Z;
 
+	private float diffrence_x;
+	private float diffrence_z;
+
 	double speed_ = 0.75;
 
 	double complete_resultX;
@@ -59,7 +63,7 @@ public class FuzzyBox : MonoBehaviour
 		new_result_X = 0.0;
 		new_result_Z = 0.0;
 
-		speed_ = 0.75;
+		speed_ = 0.45;
 
 		resultX = engineX.Defuzzify(new { distanceX = (double)this.transform.position.x });
 		resultZ = engineZ.Defuzzify(new { distanceZ = (double)this.transform.position.z });
@@ -99,6 +103,10 @@ public class FuzzyBox : MonoBehaviour
 		Centre_x = Centre.transform.position.x;
 		Centre_z = Centre.transform.position.z;
 
+		diffrence_x = 100;
+
+		diffrence_z = 100;
+
 		Obstacle_X1 = obstacle_array[pos_in_arr].transform.position.x;
 		Obstacle_Z1 = obstacle_array[pos_in_arr].transform.position.z;
 
@@ -108,14 +116,14 @@ public class FuzzyBox : MonoBehaviour
 
 		// Here we need to setup the Fuzzy Inference System
 		distance_X = new LinguisticVariable("distanceX");
-		var right_X = distance_X.MembershipFunctions.AddTrapezoid("right_X", Centre_x - 75, Centre_x - 75, Centre_x - 5, Centre_x - 1);
+		var right_X = distance_X.MembershipFunctions.AddTrapezoid("right_X", Centre_x - diffrence_x, Centre_x - diffrence_x, Centre_x - 5, Centre_x - 1);
 		var none_X = distance_X.MembershipFunctions.AddTrapezoid("none_X", Centre_x - 10, Centre_x - 0.5, Centre_x + 0.5, Centre_x + 10);
-		var left_X = distance_X.MembershipFunctions.AddTrapezoid("left_X", Centre_x + 1, Centre_x + 10, Centre_x + 75, Centre_x + 75);
+		var left_X = distance_X.MembershipFunctions.AddTrapezoid("left_X", Centre_x + 1, Centre_x + 10, Centre_x + diffrence_x, Centre_x + diffrence_x);
 
 		direction_X = new LinguisticVariable("directionX");
-		var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Centre_x + -75, Centre_x + -75, Centre_x + -5, Centre_x + -1);
+		var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Centre_x + -diffrence_x, Centre_x + -diffrence_x, Centre_x + -5, Centre_x + -1);
 		var none_direction_X = direction_X.MembershipFunctions.AddTrapezoid("none_direction_X", Centre_x + -10, Centre_x + -0.5, Centre_x + 0.5, Centre_x + 10);
-		var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Centre_x + 1, Centre_x + 10, Centre_x + 75, Centre_x + 75);
+		var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Centre_x + 1, Centre_x + 10, Centre_x + diffrence_x, Centre_x + diffrence_x);
 
 		//-----------------------------
 		//Will probably need to map out a new graph and values to allow for the player to act normal
@@ -148,14 +156,14 @@ public class FuzzyBox : MonoBehaviour
 		//-----------------------------
 
 		distance_Z = new LinguisticVariable("distanceZ");
-		var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Centre_z - 75, Centre_z - 75, Centre_z - 5, Centre_z - 1);
+		var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Centre_z - diffrence_z, Centre_z - diffrence_z, Centre_z - 5, Centre_z - 1);
 		var none_Z = distance_Z.MembershipFunctions.AddTrapezoid("none_Y", Centre_z - 10, Centre_z - 0.5, Centre_z + 0.5, Centre_z + 10);
-		var left_Z = distance_Z.MembershipFunctions.AddTrapezoid("left_Y", Centre_z + 1, Centre_z + 10, Centre_z + 75, Centre_z + 75);
+		var left_Z = distance_Z.MembershipFunctions.AddTrapezoid("left_Y", Centre_z + 1, Centre_z + 10, Centre_z + diffrence_z, Centre_z + diffrence_z);
 
 		direction_Z = new LinguisticVariable("directionZ");
-		var right_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("right_direction_Y", Centre_z + -75, Centre_z + -75, Centre_z + -5, Centre_z + -1);
+		var right_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("right_direction_Y", Centre_z + -diffrence_z, Centre_z + -diffrence_z, Centre_z + -5, Centre_z + -1);
 		var none_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("none_direction_Y", Centre_z + -10, Centre_z + -0.5, Centre_z + 0.5, Centre_z + 10);
-		var left_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("left_direction_Y", Centre_z + 1, Centre_z + 10, Centre_z + 75, Centre_z + 75);
+		var left_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("left_direction_Y", Centre_z + 1, Centre_z + 10, Centre_z + diffrence_z, Centre_z + diffrence_z);
 
 		engineZ = new FuzzyEngineFactory().Default();
 
