@@ -251,7 +251,6 @@ MonoBehaviour:
   Centre: {fileID: 1927129409}
   obstacle_array:
   - {fileID: 1026879711}
-  - {fileID: 1023758534}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,7 +459,6 @@ MonoBehaviour:
   box_obj: {fileID: 26206252}
   obstacle_array:
   - {fileID: 1026879711}
-  - {fileID: 1023758534}
   GoalObject: {fileID: 1927129409}
 --- !u!4 &432219370
 Transform:

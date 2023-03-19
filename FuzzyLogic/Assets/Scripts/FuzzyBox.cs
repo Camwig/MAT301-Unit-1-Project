@@ -27,9 +27,6 @@ public class FuzzyBox : MonoBehaviour
 	private float Obstacle_X;
 	private float Obstacle_Z;
 
-	private float Obstacle_X1;
-	private float Obstacle_Z1;
-
 	private static int array_pos;
 
 	double resultX;
@@ -49,10 +46,22 @@ public class FuzzyBox : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> obstacle_array;
 
+
+	//Change_pos change_pos;
+	
+	//Check this is alright
+
 	void Start()
 	{
-		array_pos = 0;
-		Setup_Fuzzy_Rules(array_pos);
+		//change_pos = new Change_pos();
+
+
+		//array_pos = 0;
+
+		//for (int k = 0; k < obstacle_array.Count; k++)
+		//{
+		Setup_Fuzzy_Rules(0);
+		//}
 	}
 
     void FixedUpdate()
@@ -84,21 +93,29 @@ public class FuzzyBox : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-	{
-		if(array_pos > obstacle_array.Count - 1)
-        {
-			array_pos = 0;
-        }
+ //   void Update()
+	//{
+ //       //if (array_pos > obstacle_array.Count - 1)
+ //       //{
+ //       //    array_pos = 0;
+ //       //}
 
-		Setup_Fuzzy_Rules(array_pos);
+	//	//Check if this is okay
 
-		//Debug.Log(array_pos);
+	//	// I need to make sure this is all good
 
-		array_pos++;
-    }
+	//	//if(change_pos.update_pos == true)
+ // //      {
+	//		//Setup_Fuzzy_Rules(0);
+	//	//	change_pos.update_pos = false;
+	//	//}
 
-	void Setup_Fuzzy_Rules(int pos_in_arr)
+ //       //Debug.Log(array_pos);
+
+ //       //array_pos++;
+ //   }
+
+	public void Setup_Fuzzy_Rules(int pos_in_arr)
     {
 		Centre_x = Centre.transform.position.x;
 		Centre_z = Centre.transform.position.z;
@@ -107,8 +124,8 @@ public class FuzzyBox : MonoBehaviour
 
 		diffrence_z = 200;
 
-		Obstacle_X1 = obstacle_array[pos_in_arr].transform.position.x;
-		Obstacle_Z1 = obstacle_array[pos_in_arr].transform.position.z;
+		Obstacle_X = obstacle_array[pos_in_arr].transform.position.x;
+		Obstacle_Z = obstacle_array[pos_in_arr].transform.position.z;
 
 		/*var right = distance.MembershipFunctions.AddTrapezoid("right", -50, -50, -5, -1);
 		var none = distance.MembershipFunctions.AddTrapezoid("none", -5, -0.5, 0.5, 5);
@@ -144,8 +161,8 @@ public class FuzzyBox : MonoBehaviour
 
 		//-----------------------------
 		Avoidance_distance_X = new LinguisticVariable("Avoidance_distanceX");
-		var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X1 + -12.5, Obstacle_X1 + -12.5, Obstacle_X1 + -5, Obstacle_X1 + -1);
-		var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X1 + 0.25, Obstacle_X1 + 1.25, Obstacle_X1 + 12.5, Obstacle_X1 + 12.5);
+		var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -12.5, Obstacle_X + -12.5, Obstacle_X + -5, Obstacle_X + -1);
+		var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + 12.5, Obstacle_X + 12.5);
 
 		avoidEngineX = new FuzzyEngineFactory().Default();
 
@@ -175,8 +192,8 @@ public class FuzzyBox : MonoBehaviour
 
 		//-----------------------------
 		Avoidance_distance_Z = new LinguisticVariable("Avoidance_distanceZ");
-		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z1 + -12.5, Obstacle_Z1 + -12.5, Obstacle_Z1 + -5, Obstacle_Z1 + -1);
-		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z1 + 0.25, Obstacle_Z1 + 1.25, Obstacle_Z1 + 12.5, Obstacle_Z1 + 12.5);
+		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -12.5, Obstacle_Z + -12.5, Obstacle_Z + -5, Obstacle_Z + -1);
+		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + 12.5, Obstacle_Z + 12.5);
 
 		avoidEngineZ = new FuzzyEngineFactory().Default();
 

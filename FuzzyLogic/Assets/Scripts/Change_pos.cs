@@ -129,6 +129,8 @@ public class Change_pos : MonoBehaviour
     bool Segment_3_taken;
     bool Segment_4_taken;
 
+    FuzzyBox fuzzy_box;
+
     //Need to find a way to change positions of all the objects once the box has got close enough to the goal
     // The obstacles should change positions
     // The goal should change position based randomly from the centre
@@ -140,6 +142,7 @@ public class Change_pos : MonoBehaviour
     {
         array_obj = new List<GameObject>();
 
+        fuzzy_box = box_obj.GetComponent<FuzzyBox>();
 
         Segment = -1;
 
@@ -151,7 +154,7 @@ public class Change_pos : MonoBehaviour
 
         array_obj.Add(GoalObject);
         array_obj.Add(obstacle_array[0]);
-        array_obj.Add(obstacle_array[1]);
+        //array_obj.Add(obstacle_array[1]);
 
         //array_obj_space.Add(-1);
         //array_obj_space.Add(-1);
@@ -252,6 +255,8 @@ public class Change_pos : MonoBehaviour
                 //        break;
                 //}
 
+                //Need to check if this is okay
+
                 if(Segment ==1)
                 {
                     if (!Segment_1_taken)
@@ -265,7 +270,7 @@ public class Change_pos : MonoBehaviour
                         Segment = 2;
                     }
                 }
-                if (Segment ==2)
+                if (Segment == 2)
                 {
                     if (!Segment_2_taken)
                     {
@@ -291,7 +296,7 @@ public class Change_pos : MonoBehaviour
                         Segment = 4;
                     }
                 }
-                if(Segment ==4)
+                if(Segment == 4)
                 {
                     if (!Segment_4_taken)
                     {
@@ -299,10 +304,7 @@ public class Change_pos : MonoBehaviour
                         z_value = Random.Range(-20, -10);
                         Segment_4_taken = true;
                     }
-                    //else
-                    //{
-                    //    Segment = 1;
-                    //}
+                    //Dont Need to move along cause there will be at least two free sections so it should be fine
                 }
 
                 array_obj[j].transform.position = new Vector3(x_value, 2.0f, z_value);
@@ -310,6 +312,8 @@ public class Change_pos : MonoBehaviour
                 Segment = Random.Range(1, 4);
 
             }
+
+            fuzzy_box.Setup_Fuzzy_Rules(0);
 
             run_positioning = false;
             Segment = -1;
