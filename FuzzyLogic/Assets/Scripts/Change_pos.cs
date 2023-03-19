@@ -257,55 +257,58 @@ public class Change_pos : MonoBehaviour
 
                 //Need to check if this is okay
 
-                if(Segment ==1)
-                {
-                    if (!Segment_1_taken)
-                    {
-                        x_value = Random.Range(-20, 20);
-                        z_value = Random.Range(10, 40);
-                        Segment_1_taken = true;
-                    }
-                    else
-                    {
-                        Segment = 2;
-                    }
-                }
-                if (Segment == 2)
-                {
-                    if (!Segment_2_taken)
-                    {
-                        x_value = Random.Range(10, 40);
-                        z_value = Random.Range(10, 40);
-                        Segment_2_taken = true;
-                    }
-                    else
-                    {
-                        Segment = 3;
-                    }
-                }
-                if(Segment==3)
-                {
-                    if (!Segment_3_taken)
-                    {
-                        x_value = Random.Range(-20, -10);
-                        z_value = Random.Range(-20, -10);
-                        Segment_3_taken = true;
-                    }
-                    else
-                    {
-                        Segment = 4;
-                    }
-                }
-                if(Segment == 4)
-                {
-                    if (!Segment_4_taken)
-                    {
-                        x_value = Random.Range(20, 40);
-                        z_value = Random.Range(-20, -10);
-                        Segment_4_taken = true;
-                    }
-                    //Dont Need to move along cause there will be at least two free sections so it should be fine
-                }
+                z_value = Random.Range(-20, 40);
+                x_value = Random.Range(-20, 40);
+
+                //if(Segment ==1)
+                //{
+                //    if (!Segment_1_taken)
+                //    {
+                //        x_value = Random.Range(-20, 20);
+                //        z_value = Random.Range(10, 40);
+                //        Segment_1_taken = true;
+                //    }
+                //    else
+                //    {
+                //        Segment = 2;
+                //    }
+                //}
+                //if (Segment == 2)
+                //{
+                //    if (!Segment_2_taken)
+                //    {
+                //        x_value = Random.Range(10, 40);
+                //        z_value = Random.Range(10, 40);
+                //        Segment_2_taken = true;
+                //    }
+                //    else
+                //    {
+                //        Segment = 3;
+                //    }
+                //}
+                //if(Segment==3)
+                //{
+                //    if (!Segment_3_taken)
+                //    {
+                //        x_value = Random.Range(-20, -10);
+                //        z_value = Random.Range(-20, -10);
+                //        Segment_3_taken = true;
+                //    }
+                //    else
+                //    {
+                //        Segment = 4;
+                //    }
+                //}
+                //if(Segment == 4)
+                //{
+                //    if (!Segment_4_taken)
+                //    {
+                //        x_value = Random.Range(20, 40);
+                //        z_value = Random.Range(-20, -10);
+                //        Segment_4_taken = true;
+                //    }
+                //    //Dont Need to move along cause there will be at least two free sections so it should be fine
+                //}
 
                 array_obj[j].transform.position = new Vector3(x_value, 2.0f, z_value);
 
