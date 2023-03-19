@@ -93,7 +93,7 @@ public class FuzzyBox : MonoBehaviour
 
 		Setup_Fuzzy_Rules(array_pos);
 
-		Debug.Log(array_pos);
+		//Debug.Log(array_pos);
 
 		array_pos++;
     }
@@ -103,9 +103,9 @@ public class FuzzyBox : MonoBehaviour
 		Centre_x = Centre.transform.position.x;
 		Centre_z = Centre.transform.position.z;
 
-		diffrence_x = 100;
+		diffrence_x = 200;
 
-		diffrence_z = 100;
+		diffrence_z = 200;
 
 		Obstacle_X1 = obstacle_array[pos_in_arr].transform.position.x;
 		Obstacle_Z1 = obstacle_array[pos_in_arr].transform.position.z;
