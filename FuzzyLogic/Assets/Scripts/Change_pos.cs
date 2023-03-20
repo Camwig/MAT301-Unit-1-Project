@@ -106,6 +106,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Change_pos : MonoBehaviour
 {
@@ -123,11 +124,21 @@ public class Change_pos : MonoBehaviour
 
     PointSystem points_;
 
+    [SerializeField]
+    GameObject timer;
+    CountdownTimer time_;
+
     private List<GameObject> array_obj;
 
     private float currentTime = 0;
     private float StartingTime = 15;
     private bool check_time;
+
+    private float num_of_cols = 0.0f;
+    private bool had_collision = false;
+
+    [SerializeField]
+    Text CollisionText;
 
     //private List<int> array_obj_space;
 
@@ -141,6 +152,11 @@ public class Change_pos : MonoBehaviour
     //bool Segment_4_taken;
 
     FuzzyBox fuzzy_box;
+
+    public List<float> Timings;
+    private float current_sess_time;
+    private float starting_sess_time;
+    private bool StartTiming;
 
     //Need to find a way to change positions of all the objects once the box has got close enough to the goal
     // The obstacles should change positions
@@ -160,6 +176,12 @@ public class Change_pos : MonoBehaviour
         fuzzy_box = box_obj.GetComponent<FuzzyBox>();
 
         points_ = GameManager.GetComponent<PointSystem>();
+
+        time_ = timer.GetComponent<CountdownTimer>();
+
+        current_sess_time = 0;
+        starting_sess_time = 0;
+        StartTiming = true;
 
         //Segment = -1;
 
@@ -188,8 +210,8 @@ public class Change_pos : MonoBehaviour
     {
 
         //Need a timer for 10 to 30 seconds to check if it hasnt reached the goal reset the objects - DONE
-        //Need to time how long it takes to reach the goal could take in an average
-        //count the number of collisions with obstacle
+        //Need to time how long it takes to reach the goal could take in an average 
+        //count the number of collisions with obstacle - DONE
 
         //Time Logic
 
@@ -200,10 +222,44 @@ public class Change_pos : MonoBehaviour
         //call the reset function
         //However if it does hit it reset the timer
 
-        if(Vector3.Distance(box_obj.transform.position, obstacle_array[0].transform.position) < 3)
+        //How long it takes logic
+
+        //Time how long it takes to get to the destination
+        //Initialise that array to have zero in zero
+        //When we access it for the first time and there is zero in zero get rid of it and put the new value in its place
+        //Save that time into an array
+        //get the avarege of that array
+        //Quick sorting algorithm
+        //Smallets to biggest than get average
+        //or whichever way is better to get the average
+        //Display it
+
+        //Default it to zero
+        //Or if its empty just tell it to say zero
+
+        //On reset empty it
+
+        //Counting collisions logic
+
+        //Initialise count to zero and then 
+        //Simply increase it every time we make a collision
+        //can only count for once per session though 
+        //have a boolean to keep track of that
+        //when the object positioning gets reset 
+        //reset the boolean
+
+        CheckTimings();
+
+
+        if (Vector3.Distance(box_obj.transform.position, obstacle_array[0].transform.position) < 3)
         {
             //Deduct points
             points_.MinusPoints();
+            if(had_collision == false)
+            {
+                num_of_cols++;
+                had_collision = true;
+            }
         }
 
         if (Vector3.Distance(box_obj.transform.position, GoalObject.transform.position) < 6.125f)
@@ -237,9 +293,15 @@ public class Change_pos : MonoBehaviour
 
             run_positioning = false;
             check_time = true;
+
+            float newValue = starting_sess_time - current_sess_time;
+            Timings.Add(newValue);
+            Debug.Log(newValue);
+            StartTiming = true;
             //Segment = -1;
         }
 
+        CollisionText.text = num_of_cols.ToString();
 
     }
 
@@ -273,7 +335,7 @@ public class Change_pos : MonoBehaviour
         for (int j = 0; j < array_obj.Count; j++)
         {
 
-            Debug.Log(j);
+            //Debug.Log(j);
 
             float x_value = 0.0f;
             float z_value = 0.0f;
@@ -387,8 +449,31 @@ public class Change_pos : MonoBehaviour
 
             array_obj[j].transform.position = new Vector3(x_value, 2.0f, z_value);
 
+            had_collision = false;
+
             //Segment = Random.Range(1, 4);
 
+        }
+    }
+
+    public void ResetCollisions()
+    {
+        num_of_cols = 0.0f;
+        had_collision = false;
+    }
+
+    public void CheckTimings()
+    {
+        if(StartTiming == true)
+        {
+            starting_sess_time = time_.GiveCurrentTime();
+            current_sess_time = starting_sess_time;
+            StartTiming = false;
+        }
+
+        if (StartTiming == false && run_positioning == false)
+        {
+            current_sess_time -= 1 * Time.deltaTime;
         }
     }
 }

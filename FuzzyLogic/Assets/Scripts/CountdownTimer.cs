@@ -49,4 +49,9 @@ public class CountdownTimer : MonoBehaviour
     {
         currentTime = startingTime;
     }
+
+    public float GiveCurrentTime()
+    {
+        return currentTime;
+    }
 }
