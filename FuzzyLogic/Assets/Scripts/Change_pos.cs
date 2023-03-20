@@ -171,19 +171,7 @@ public class Change_pos : MonoBehaviour
     {
         if (Vector3.Distance(box_obj.transform.position, GoalObject.transform.position) < 6.125f)
         {
-            box_obj.transform.position = new Vector3(0f, 0.6f, 0.32f);
-            Rigidbody rigidbody_;
-            rigidbody_ = box_obj.GetComponent<Rigidbody>();
-            rigidbody_.velocity = new Vector3(0f, 0f, 0f);
-            rigidbody_.angularVelocity = new Vector3(0f, 0f, 0f);
-            box_obj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
-
-            //Segment = Random.Range(1, 4);
-            run_positioning = true;
-            //Segment_1_taken = false;
-            //Segment_2_taken = false;
-            //Segment_3_taken = false;
-            //Segment_4_taken = false;
+            ResetBox();
         }
 
         //Loop for every obstacle and goal
@@ -195,126 +183,7 @@ public class Change_pos : MonoBehaviour
         if (run_positioning == true)
         {
 
-            for (int j = 0; j < array_obj.Count; j++)
-            {
-
-                Debug.Log(j);
-
-                float x_value = 0.0f;
-                float z_value = 0.0f;
-
-                //switch (Segment)
-                //{
-                //    case 1:
-                //        if (!Segment_1_taken)
-                //        {
-                //            x_value = Random.Range(-20, 20);
-                //            z_value = Random.Range(10, 40);
-                //            Segment_1_taken = true;
-                //        }
-                //        else
-                //        {
-                //            Segment = 2;
-                //        }
-                //        break;
-                //    case 2:
-                //        if (!Segment_2_taken)
-                //        {
-                //            x_value = Random.Range(10, 40);
-                //            z_value = Random.Range(10, 40);
-                //            Segment_2_taken = true;
-                //        }
-                //        else
-                //        {
-                //            Segment = 3;
-                //        }
-                //        break;
-                //    case 3:
-                //        if (!Segment_3_taken)
-                //        {
-                //            x_value = Random.Range(-20, -10);
-                //            z_value = Random.Range(-20, -10);
-                //            Segment_3_taken = true;
-                //        }
-                //        else
-                //        {
-                //            Segment = 4;
-                //        }
-                //        break;
-                //    case 4:
-                //        if (!Segment_4_taken)
-                //        {
-                //            x_value = Random.Range(20, 40);
-                //            z_value = Random.Range(-20, -10);
-                //            Segment_4_taken = true;
-                //        }
-                //        else
-                //        {
-                //            Segment = 1;
-                //        }
-                //        break;
-                //}
-
-                //Need to check if this is okay
-
-                z_value = Random.Range(-20, 40);
-                x_value = Random.Range(-20, 40);
-
-                //if(Segment ==1)
-                //{
-                //    if (!Segment_1_taken)
-                //    {
-                //        x_value = Random.Range(-20, 20);
-                //        z_value = Random.Range(10, 40);
-                //        Segment_1_taken = true;
-                //    }
-                //    else
-                //    {
-                //        Segment = 2;
-                //    }
-                //}
-                //if (Segment == 2)
-                //{
-                //    if (!Segment_2_taken)
-                //    {
-                //        x_value = Random.Range(10, 40);
-                //        z_value = Random.Range(10, 40);
-                //        Segment_2_taken = true;
-                //    }
-                //    else
-                //    {
-                //        Segment = 3;
-                //    }
-                //}
-                //if(Segment==3)
-                //{
-                //    if (!Segment_3_taken)
-                //    {
-                //        x_value = Random.Range(-20, -10);
-                //        z_value = Random.Range(-20, -10);
-                //        Segment_3_taken = true;
-                //    }
-                //    else
-                //    {
-                //        Segment = 4;
-                //    }
-                //}
-                //if(Segment == 4)
-                //{
-                //    if (!Segment_4_taken)
-                //    {
-                //        x_value = Random.Range(20, 40);
-                //        z_value = Random.Range(-20, -10);
-                //        Segment_4_taken = true;
-                //    }
-                //    //Dont Need to move along cause there will be at least two free sections so it should be fine
-                //}
-
-                array_obj[j].transform.position = new Vector3(x_value, 2.0f, z_value);
-
-                //Segment = Random.Range(1, 4);
-
-            }
+            ResetOtherObjects();
 
             fuzzy_box.Setup_Fuzzy_Rules(0);
 
@@ -323,5 +192,147 @@ public class Change_pos : MonoBehaviour
         }
 
 
+    }
+
+
+    public void ResetBox()
+    {
+        box_obj.transform.position = new Vector3(0f, 0.6f, 0.32f);
+        Rigidbody rigidbody_;
+        rigidbody_ = box_obj.GetComponent<Rigidbody>();
+        rigidbody_.velocity = new Vector3(0f, 0f, 0f);
+        rigidbody_.angularVelocity = new Vector3(0f, 0f, 0f);
+        box_obj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+
+        //Segment = Random.Range(1, 4);
+        run_positioning = true;
+        //Segment_1_taken = false;
+        //Segment_2_taken = false;
+        //Segment_3_taken = false;
+        //Segment_4_taken = false;
+    }
+
+    public void ResetOtherObjects()
+    {
+        for (int j = 0; j < array_obj.Count; j++)
+        {
+
+            Debug.Log(j);
+
+            float x_value = 0.0f;
+            float z_value = 0.0f;
+
+            //switch (Segment)
+            //{
+            //    case 1:
+            //        if (!Segment_1_taken)
+            //        {
+            //            x_value = Random.Range(-20, 20);
+            //            z_value = Random.Range(10, 40);
+            //            Segment_1_taken = true;
+            //        }
+            //        else
+            //        {
+            //            Segment = 2;
+            //        }
+            //        break;
+            //    case 2:
+            //        if (!Segment_2_taken)
+            //        {
+            //            x_value = Random.Range(10, 40);
+            //            z_value = Random.Range(10, 40);
+            //            Segment_2_taken = true;
+            //        }
+            //        else
+            //        {
+            //            Segment = 3;
+            //        }
+            //        break;
+            //    case 3:
+            //        if (!Segment_3_taken)
+            //        {
+            //            x_value = Random.Range(-20, -10);
+            //            z_value = Random.Range(-20, -10);
+            //            Segment_3_taken = true;
+            //        }
+            //        else
+            //        {
+            //            Segment = 4;
+            //        }
+            //        break;
+            //    case 4:
+            //        if (!Segment_4_taken)
+            //        {
+            //            x_value = Random.Range(20, 40);
+            //            z_value = Random.Range(-20, -10);
+            //            Segment_4_taken = true;
+            //        }
+            //        else
+            //        {
+            //            Segment = 1;
+            //        }
+            //        break;
+            //}
+
+            //Need to check if this is okay
+
+            z_value = Random.Range(-20, 40);
+            x_value = Random.Range(-20, 40);
+
+            //if(Segment ==1)
+            //{
+            //    if (!Segment_1_taken)
+            //    {
+            //        x_value = Random.Range(-20, 20);
+            //        z_value = Random.Range(10, 40);
+            //        Segment_1_taken = true;
+            //    }
+            //    else
+            //    {
+            //        Segment = 2;
+            //    }
+            //}
+            //if (Segment == 2)
+            //{
+            //    if (!Segment_2_taken)
+            //    {
+            //        x_value = Random.Range(10, 40);
+            //        z_value = Random.Range(10, 40);
+            //        Segment_2_taken = true;
+            //    }
+            //    else
+            //    {
+            //        Segment = 3;
+            //    }
+            //}
+            //if(Segment==3)
+            //{
+            //    if (!Segment_3_taken)
+            //    {
+            //        x_value = Random.Range(-20, -10);
+            //        z_value = Random.Range(-20, -10);
+            //        Segment_3_taken = true;
+            //    }
+            //    else
+            //    {
+            //        Segment = 4;
+            //    }
+            //}
+            //if(Segment == 4)
+            //{
+            //    if (!Segment_4_taken)
+            //    {
+            //        x_value = Random.Range(20, 40);
+            //        z_value = Random.Range(-20, -10);
+            //        Segment_4_taken = true;
+            //    }
+            //    //Dont Need to move along cause there will be at least two free sections so it should be fine
+            //}
+
+            array_obj[j].transform.position = new Vector3(x_value, 2.0f, z_value);
+
+            //Segment = Random.Range(1, 4);
+
+        }
     }
 }

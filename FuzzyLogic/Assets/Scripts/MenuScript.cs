@@ -10,19 +10,17 @@ public class MenuScript : MonoBehaviour
     GameObject timer;
     CountdownTimer this_timer;
 
+    [SerializeField]
+    GameObject PositionObj;
+    Change_pos pos_script;
+
     // Start is called before the first frame update
     void Start()
     {
         menu.SetActive(false);
 
-
         this_timer = timer.GetComponent<CountdownTimer>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        pos_script = PositionObj.GetComponent<Change_pos>();
     }
 
     public void ToMenu()
@@ -42,6 +40,9 @@ public class MenuScript : MonoBehaviour
         this_timer.SetTimer(10.0f);
         this_timer.ResetTimer();
         //-----------------
+
+        pos_script.ResetBox();
+        pos_script.ResetOtherObjects();
 
         menu.SetActive(false);
         Time.timeScale = 1.0f;
