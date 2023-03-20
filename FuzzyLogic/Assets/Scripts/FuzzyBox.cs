@@ -159,10 +159,13 @@ public class FuzzyBox : MonoBehaviour
 
 		engineX.Rules.Add(rule1_X, rule2_X, rule3_X);
 
+		/*		var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -12.5, Obstacle_X + -12.5, Obstacle_X + -5, Obstacle_X + -1);
+		var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + 12.5, Obstacle_X + 12.5);*/
+
 		//-----------------------------
 		Avoidance_distance_X = new LinguisticVariable("Avoidance_distanceX");
-		var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -12.5, Obstacle_X + -12.5, Obstacle_X + -5, Obstacle_X + -1);
-		var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + 12.5, Obstacle_X + 12.5);
+		var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -6.25, Obstacle_X + -6.25, Obstacle_X + -5, Obstacle_X + -1);
+		var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + 6.25, Obstacle_X + 6.25);
 
 		avoidEngineX = new FuzzyEngineFactory().Default();
 
@@ -192,8 +195,8 @@ public class FuzzyBox : MonoBehaviour
 
 		//-----------------------------
 		Avoidance_distance_Z = new LinguisticVariable("Avoidance_distanceZ");
-		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -12.5, Obstacle_Z + -12.5, Obstacle_Z + -5, Obstacle_Z + -1);
-		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + 12.5, Obstacle_Z + 12.5);
+		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -6.25, Obstacle_Z + -6.25, Obstacle_Z + -5, Obstacle_Z + -1);
+		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + 6.25, Obstacle_Z + 6.25);
 
 		avoidEngineZ = new FuzzyEngineFactory().Default();
 

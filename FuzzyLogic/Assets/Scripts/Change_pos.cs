@@ -120,14 +120,14 @@ public class Change_pos : MonoBehaviour
 
     //private List<int> array_obj_space;
 
-    int Segment;
+    //int Segment;
 
     bool run_positioning;
 
-    bool Segment_1_taken;
-    bool Segment_2_taken;
-    bool Segment_3_taken;
-    bool Segment_4_taken;
+    //bool Segment_1_taken;
+    //bool Segment_2_taken;
+    //bool Segment_3_taken;
+    //bool Segment_4_taken;
 
     FuzzyBox fuzzy_box;
 
@@ -144,13 +144,13 @@ public class Change_pos : MonoBehaviour
 
         fuzzy_box = box_obj.GetComponent<FuzzyBox>();
 
-        Segment = -1;
+        //Segment = -1;
 
         run_positioning = false;
-        Segment_1_taken = false;
-        Segment_2_taken = false;
-        Segment_3_taken = false;
-        Segment_4_taken = false;
+        //Segment_1_taken = false;
+        //Segment_2_taken = false;
+        //Segment_3_taken = false;
+        //Segment_4_taken = false;
 
         array_obj.Add(GoalObject);
         array_obj.Add(obstacle_array[0]);
@@ -178,12 +178,12 @@ public class Change_pos : MonoBehaviour
             rigidbody_.angularVelocity = new Vector3(0f, 0f, 0f);
             box_obj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
 
-            Segment = Random.Range(1, 4);
+            //Segment = Random.Range(1, 4);
             run_positioning = true;
-            Segment_1_taken = false;
-            Segment_2_taken = false;
-            Segment_3_taken = false;
-            Segment_4_taken = false;
+            //Segment_1_taken = false;
+            //Segment_2_taken = false;
+            //Segment_3_taken = false;
+            //Segment_4_taken = false;
         }
 
         //Loop for every obstacle and goal
@@ -312,14 +312,14 @@ public class Change_pos : MonoBehaviour
 
                 array_obj[j].transform.position = new Vector3(x_value, 2.0f, z_value);
 
-                Segment = Random.Range(1, 4);
+                //Segment = Random.Range(1, 4);
 
             }
 
             fuzzy_box.Setup_Fuzzy_Rules(0);
 
             run_positioning = false;
-            Segment = -1;
+            //Segment = -1;
         }
 
 
