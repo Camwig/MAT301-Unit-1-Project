@@ -14,6 +14,11 @@ public class MenuScript : MonoBehaviour
     GameObject PositionObj;
     Change_pos pos_script;
 
+    [SerializeField]
+    GameObject GameManager;
+
+    PointSystem points_;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +26,7 @@ public class MenuScript : MonoBehaviour
 
         this_timer = timer.GetComponent<CountdownTimer>();
         pos_script = PositionObj.GetComponent<Change_pos>();
+        points_ = GameManager.GetComponent<PointSystem>();
     }
 
     public void ToMenu()
@@ -31,9 +37,16 @@ public class MenuScript : MonoBehaviour
 
     public void StartApp()
     {
+        ResetVariables();
+        menu.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
+    public void ResetVariables()
+    {
         //Set all the appropriate things and then run
         //Timer - Done
-        //Objects
+        //Objects - Done
         //Points
 
         //-----Timer set----
@@ -41,10 +54,11 @@ public class MenuScript : MonoBehaviour
         this_timer.ResetTimer();
         //-----------------
 
+        //-----Positions-----
         pos_script.ResetBox();
         pos_script.ResetOtherObjects();
+        //-------------------
 
-        menu.SetActive(false);
-        Time.timeScale = 1.0f;
+        points_.ResetValues();
     }
 }

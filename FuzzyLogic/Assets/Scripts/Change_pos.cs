@@ -111,10 +111,17 @@ public class Change_pos : MonoBehaviour
 {
     [SerializeField]
     GameObject box_obj;
+
     [SerializeField]
     private List<GameObject> obstacle_array;
+
     [SerializeField]
     GameObject GoalObject;
+
+    [SerializeField]
+    GameObject GameManager;
+
+    PointSystem points_;
 
     private List<GameObject> array_obj;
 
@@ -144,6 +151,8 @@ public class Change_pos : MonoBehaviour
 
         fuzzy_box = box_obj.GetComponent<FuzzyBox>();
 
+        points_ = GameManager.GetComponent<PointSystem>();
+
         //Segment = -1;
 
         run_positioning = false;
@@ -169,6 +178,12 @@ public class Change_pos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Vector3.Distance(box_obj.transform.position, obstacle_array[0].transform.position) < 1)
+        {
+            //Deduct points
+            points_.MinusPoints();
+        }
+
         if (Vector3.Distance(box_obj.transform.position, GoalObject.transform.position) < 6.125f)
         {
             ResetBox();
@@ -184,6 +199,8 @@ public class Change_pos : MonoBehaviour
         {
 
             ResetOtherObjects();
+
+            points_.CollectPoints();
 
             fuzzy_box.Setup_Fuzzy_Rules(0);
 
@@ -210,6 +227,9 @@ public class Change_pos : MonoBehaviour
         //Segment_2_taken = false;
         //Segment_3_taken = false;
         //Segment_4_taken = false;
+
+        points_.AddPoints();
+        //Add points
     }
 
     public void ResetOtherObjects()

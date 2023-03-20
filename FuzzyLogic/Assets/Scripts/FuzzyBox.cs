@@ -92,29 +92,6 @@ public class FuzzyBox : MonoBehaviour
 		rigidbody.AddForce(new Vector3((float)(complete_resultX * speed_), 0f, (float)(complete_resultZ * speed_)));
     }
 
-    // Update is called once per frame
- //   void Update()
-	//{
- //       //if (array_pos > obstacle_array.Count - 1)
- //       //{
- //       //    array_pos = 0;
- //       //}
-
-	//	//Check if this is okay
-
-	//	// I need to make sure this is all good
-
-	//	//if(change_pos.update_pos == true)
- // //      {
-	//		//Setup_Fuzzy_Rules(0);
-	//	//	change_pos.update_pos = false;
-	//	//}
-
- //       //Debug.Log(array_pos);
-
- //       //array_pos++;
- //   }
-
 	public void Setup_Fuzzy_Rules(int pos_in_arr)
     {
 		Centre_x = Centre.transform.position.x;
