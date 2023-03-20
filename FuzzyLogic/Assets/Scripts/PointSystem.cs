@@ -52,4 +52,10 @@ public class PointSystem : MonoBehaviour
         Positive_points = 0.0f;
         Negative_points = 0.0f;
     }
+
+    public void ResetPoints()
+    {
+        Positive_points = 0.0f;
+        Negative_points = 0.0f;
+    }
 }

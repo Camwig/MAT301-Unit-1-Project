@@ -125,6 +125,10 @@ public class Change_pos : MonoBehaviour
 
     private List<GameObject> array_obj;
 
+    private float currentTime = 0;
+    private float StartingTime = 15;
+    private bool check_time;
+
     //private List<int> array_obj_space;
 
     //int Segment;
@@ -147,6 +151,10 @@ public class Change_pos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        currentTime = StartingTime;
+        check_time = false;
+
         array_obj = new List<GameObject>();
 
         fuzzy_box = box_obj.GetComponent<FuzzyBox>();
@@ -178,7 +186,21 @@ public class Change_pos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(box_obj.transform.position, obstacle_array[0].transform.position) < 1)
+
+        //Need a timer for 10 to 30 seconds to check if it hasnt reached the goal reset the objects - DONE
+        //Need to time how long it takes to reach the goal could take in an average
+        //count the number of collisions with obstacle
+
+        //Time Logic
+
+        //Check time 
+        //if correct amount of time hasnt passed
+        //keep going
+        //if correct amount of time has passed
+        //call the reset function
+        //However if it does hit it reset the timer
+
+        if(Vector3.Distance(box_obj.transform.position, obstacle_array[0].transform.position) < 3)
         {
             //Deduct points
             points_.MinusPoints();
@@ -187,6 +209,15 @@ public class Change_pos : MonoBehaviour
         if (Vector3.Distance(box_obj.transform.position, GoalObject.transform.position) < 6.125f)
         {
             ResetBox();
+        }
+
+        if (check_time == true)
+        {
+            currentTime -= 1 * Time.deltaTime;
+            if(currentTime <= 0.0f)
+            {
+                ResetBox();
+            }
         }
 
         //Loop for every obstacle and goal
@@ -205,6 +236,7 @@ public class Change_pos : MonoBehaviour
             fuzzy_box.Setup_Fuzzy_Rules(0);
 
             run_positioning = false;
+            check_time = true;
             //Segment = -1;
         }
 
@@ -223,6 +255,10 @@ public class Change_pos : MonoBehaviour
 
         //Segment = Random.Range(1, 4);
         run_positioning = true;
+
+        check_time = false;
+        currentTime = StartingTime;
+        points_.ResetPoints();
         //Segment_1_taken = false;
         //Segment_2_taken = false;
         //Segment_3_taken = false;
