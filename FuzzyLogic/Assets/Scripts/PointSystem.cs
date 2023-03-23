@@ -11,8 +11,6 @@ public class PointSystem : MonoBehaviour
 
     [SerializeField]
     Text Overall_point_text;
-    //[SerializeField]
-    //Text Positive_point_text;
     [SerializeField]
     Text Negative_point_text;
 
@@ -23,7 +21,6 @@ public class PointSystem : MonoBehaviour
 
     public void Update()
     {
-        //Positive_point_text.text = "" + Positive_points.ToString();
         Negative_point_text.text = "Negative Obstacle Modifier : " + Negative_points.ToString();
         Overall_point_text.text = "Overall Score : " + Overall_points.ToString();
     }
@@ -43,8 +40,6 @@ public class PointSystem : MonoBehaviour
         Overall_points -= Negative_points;
         Overall_points += Positive_points;
         ResetPoints();
-        //Positive_points = 0.0f;
-        //Negative_points = 0.0f;
     }
 
     public void ResetValues()
