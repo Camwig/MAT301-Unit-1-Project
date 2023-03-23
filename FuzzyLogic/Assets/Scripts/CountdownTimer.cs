@@ -6,15 +6,19 @@ using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
+    //Variables to keep track of the current time and the time we initial start at
     private float currentTime = 0;
     private float startingTime = 60;
 
+    //Field for the time text object
     [SerializeField]
-    Text textElement;
+    Text TimetextElement;
 
+    //Field for the time slider text object
     [SerializeField]
     TMP_Text TimeSliderText;
 
+    //Menu game object
     [SerializeField]
     GameObject Menu;
 
@@ -22,39 +26,43 @@ public class CountdownTimer : MonoBehaviour
 
     private void Start()
     {
-        //currentTime = startingTime;
-        //fuzzy_box = box_obj.GetComponent<FuzzyBox>();
         ResetTimer();
+        //Retrieves the correct instance of the menu script
         menu_script = Menu.GetComponent<MenuScript>();
     }
 
     private void Update()
     {
+        //Decrease the time as the application is played
+        //(Countdown)
         currentTime -= 1 * Time.deltaTime;
-        textElement.text = "Time : " + currentTime.ToString();
+
+        //Output the given values to the text elements
+        TimetextElement.text = "Time : " + currentTime.ToString();
         TimeSliderText.text = "Set Timer : " + startingTime.ToString();
 
+        //If the current time gets lower or equal to zero
+        //The application will reset to the start menu
         if(currentTime <= 0)
         {
-            textElement.text = "Time : 0";
+            TimetextElement.text = "Time : 0";
             menu_script.ToMenu();
-            //Time.timeScale = 0.0f;
-            //For back on its set back to one.
         }
-        //print(currentTime);
     }
 
-
+    //Set the starting time value
     public void SetTimer(float new_time)
     {
         startingTime = new_time;
     }
 
+    //Sets the current time to be that of the starting time
     public void ResetTimer()
     {
         currentTime = startingTime;
     }
 
+    //Returns the current time
     public float GiveCurrentTime()
     {
         return currentTime;

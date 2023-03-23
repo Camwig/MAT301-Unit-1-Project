@@ -1,108 +1,3 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class Change_pos : MonoBehaviour
-//{
-//    [SerializeField]
-//    GameObject box_obj;
-//    [SerializeField]
-//    private List<GameObject> obstacle_array;
-//    [SerializeField]
-//    GameObject GoalObject;
-
-//    Rigidbody GoalBody;
-//    Rigidbody ObstacleBody_1;
-//    Rigidbody ObstacleBody_2;
-
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-//        GoalBody = GoalObject.GetComponent<Rigidbody>();
-//        ObstacleBody_1 = obstacle_array[0].GetComponent<Rigidbody>();
-//        ObstacleBody_2 = obstacle_array[1].GetComponent<Rigidbody>();
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-//        GoalMove();
-//        Obstavle1Move();
-//        Obstavle2Move();
-//    }
-
-
-//    private void GoalMove()
-//    {
-//        if (Input.GetKey(KeyCode.UpArrow))
-//        {
-//            GoalBody.AddForce(new Vector3(0, 0, 10.0f));
-//        }
-
-//        if (Input.GetKey(KeyCode.DownArrow))
-//        {
-//            GoalBody.AddForce(new Vector3(0, 0, -10.0f));
-//        }
-
-//        if (Input.GetKey(KeyCode.LeftArrow))
-//        {
-//            GoalBody.AddForce(new Vector3(-10.0f, 0, 0));
-//        }
-
-//        if (Input.GetKey(KeyCode.RightArrow))
-//        {
-//            GoalBody.AddForce(new Vector3(10.0f, 0, 0));
-//        }
-//    }
-
-//    private void Obstavle1Move()
-//    {
-//        if (Input.GetKey(KeyCode.T))
-//        {
-//            ObstacleBody_1.AddForce(new Vector3(0, 0, 10.0f));
-//        }
-
-//        if (Input.GetKey(KeyCode.G))
-//        {
-//            ObstacleBody_1.AddForce(new Vector3(0, 0, -10.0f));
-//        }
-
-//        if (Input.GetKey(KeyCode.F))
-//        {
-//            ObstacleBody_1.AddForce(new Vector3(-10.0f, 0, 0));
-//        }
-
-//        if (Input.GetKey(KeyCode.H))
-//        {
-//            ObstacleBody_1.AddForce(new Vector3(10.0f, 0, 0));
-//        }
-//    }
-
-//    private void Obstavle2Move()
-//    {
-//        if (Input.GetKey(KeyCode.I))
-//        {
-//            ObstacleBody_2.AddForce(new Vector3(0, 0, 10.0f));
-//        }
-
-//        if (Input.GetKey(KeyCode.K))
-//        {
-//            ObstacleBody_2.AddForce(new Vector3(0, 0, -10.0f));
-//        }
-
-//        if (Input.GetKey(KeyCode.J))
-//        {
-//            ObstacleBody_2.AddForce(new Vector3(-10.0f, 0, 0));
-//        }
-
-//        if (Input.GetKey(KeyCode.L))
-//        {
-//            ObstacleBody_2.AddForce(new Vector3(10.0f, 0, 0));
-//        }
-//    }
-//}
-
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -320,7 +215,7 @@ public class Change_pos : MonoBehaviour
 
         check_time = false;
         currentTime = StartingTime;
-        points_.ResetPoints();
+        //points_.ResetPoints();
         //Segment_1_taken = false;
         //Segment_2_taken = false;
         //Segment_3_taken = false;

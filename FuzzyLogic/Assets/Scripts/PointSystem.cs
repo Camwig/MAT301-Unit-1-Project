@@ -40,10 +40,11 @@ public class PointSystem : MonoBehaviour
 
     public void CollectPoints()
     {
-        Overall_points += Positive_points;
         Overall_points -= Negative_points;
-        Positive_points = 0.0f;
-        Negative_points = 0.0f;
+        Overall_points += Positive_points;
+        ResetPoints();
+        //Positive_points = 0.0f;
+        //Negative_points = 0.0f;
     }
 
     public void ResetValues()
