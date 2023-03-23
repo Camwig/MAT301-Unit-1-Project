@@ -301,7 +301,7 @@ public class Change_pos : MonoBehaviour
             //Segment = -1;
         }
 
-        CollisionText.text = num_of_cols.ToString();
+        CollisionText.text = "Number of Resets : " +  num_of_cols.ToString();
 
     }
 

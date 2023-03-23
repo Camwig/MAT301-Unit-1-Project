@@ -53,7 +53,7 @@ public class MenuScript : MonoBehaviour
         }
 
         //Give it to the text output
-        textElement.text = newAverage.ToString();
+        textElement.text = "Average Time to reach goal : " +  newAverage.ToString();
 
         menu.SetActive(true);
         Time.timeScale = 0.0f;
@@ -86,7 +86,7 @@ public class MenuScript : MonoBehaviour
 
         float newAverage = 0;
 
-        textElement.text = newAverage.ToString();
+        textElement.text = "Avergae time to reach goal : " + newAverage.ToString();
 
         points_.ResetValues();
     }

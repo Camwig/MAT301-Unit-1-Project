@@ -71,7 +71,7 @@ public class FuzzyBox : MonoBehaviour
 
     void Update()
     {
-		ForceSpeedText.text = speed_.ToString();
+		ForceSpeedText.text = "Speed of box agent : " + speed_.ToString();
     }
 
     void FixedUpdate()

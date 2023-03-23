@@ -31,12 +31,12 @@ public class CountdownTimer : MonoBehaviour
     private void Update()
     {
         currentTime -= 1 * Time.deltaTime;
-        textElement.text = currentTime.ToString();
-        TimeSliderText.text = startingTime.ToString();
+        textElement.text = "Time : " + currentTime.ToString();
+        TimeSliderText.text = "Set Timer : " + startingTime.ToString();
 
         if(currentTime <= 0)
         {
-            textElement.text = "0";
+            textElement.text = "Time : 0";
             menu_script.ToMenu();
             //Time.timeScale = 0.0f;
             //For back on its set back to one.
