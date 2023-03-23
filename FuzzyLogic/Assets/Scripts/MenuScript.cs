@@ -74,7 +74,7 @@ public class MenuScript : MonoBehaviour
         //Points
 
         //-----Timer set----
-        this_timer.SetTimer(10.0f/*100.0f*/);
+        //this_timer.SetTimer(10.0f/*100.0f*/);
         this_timer.ResetTimer();
         //-----------------
 

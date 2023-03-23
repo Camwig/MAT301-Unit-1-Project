@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
     private float currentTime = 0;
-    private float startingTime = 100;
+    private float startingTime = 1;
 
     [SerializeField]
     Text textElement;
+
+    [SerializeField]
+    TMP_Text TimeSliderText;
 
     [SerializeField]
     GameObject Menu;
@@ -28,6 +32,7 @@ public class CountdownTimer : MonoBehaviour
     {
         currentTime -= 1 * Time.deltaTime;
         textElement.text = currentTime.ToString();
+        TimeSliderText.text = startingTime.ToString();
 
         if(currentTime <= 0)
         {

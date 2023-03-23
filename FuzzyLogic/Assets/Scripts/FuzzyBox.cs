@@ -3,6 +3,7 @@ using FLS.Rules;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class FuzzyBox : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class FuzzyBox : MonoBehaviour
 	private float diffrence_x;
 	private float diffrence_z;
 
-	double speed_ = 0.75;
+	double speed_ = 0.01;
 
 	double complete_resultX;
 	double complete_resultZ;
@@ -46,9 +47,13 @@ public class FuzzyBox : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> obstacle_array;
 
+	[SerializeField]
+	TMP_Text ForceSpeedText;
+
+
 
 	//Change_pos change_pos;
-	
+
 	//Check this is alright
 
 	void Start()
@@ -64,6 +69,11 @@ public class FuzzyBox : MonoBehaviour
 		//}
 	}
 
+    void Update()
+    {
+		ForceSpeedText.text = speed_.ToString();
+    }
+
     void FixedUpdate()
 	{
 		resultX = 0.0;
@@ -72,7 +82,7 @@ public class FuzzyBox : MonoBehaviour
 		new_result_X = 0.0;
 		new_result_Z = 0.0;
 
-		speed_ = 0.45;
+		//speed_ = 0.45;
 
 		resultX = engineX.Defuzzify(new { distanceX = (double)this.transform.position.x });
 		resultZ = engineZ.Defuzzify(new { distanceZ = (double)this.transform.position.z });
@@ -184,5 +194,11 @@ public class FuzzyBox : MonoBehaviour
 		//-----------------------------
 	}
 
+	//---------------------------------------
+	public void NewSpeed(float new_speed)
+    {
+		speed_ = new_speed;
+    }
+	//---------------------------------------
 
 }
