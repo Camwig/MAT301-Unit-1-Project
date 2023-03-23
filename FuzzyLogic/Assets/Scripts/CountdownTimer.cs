@@ -7,7 +7,7 @@ using TMPro;
 public class CountdownTimer : MonoBehaviour
 {
     private float currentTime = 0;
-    private float startingTime = 1;
+    private float startingTime = 60;
 
     [SerializeField]
     Text textElement;

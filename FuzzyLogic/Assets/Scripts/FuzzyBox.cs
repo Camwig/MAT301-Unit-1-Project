@@ -39,7 +39,7 @@ public class FuzzyBox : MonoBehaviour
 	private float diffrence_x;
 	private float diffrence_z;
 
-	double speed_ = 0.01;
+	double speed_ = 0.65;
 
 	double complete_resultX;
 	double complete_resultZ;
