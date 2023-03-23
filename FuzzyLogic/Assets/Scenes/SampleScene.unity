@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448725f38a522cb43ab3cb55f70d2eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textElement: {fileID: 1689321934}
+  TimetextElement: {fileID: 1689321934}
   TimeSliderText: {fileID: 190163421}
   Menu: {fileID: 655805613}
 --- !u!1 &125595978
@@ -2189,7 +2189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.90924954, a: 1}
+  m_Color: {r: 0, g: 0.13727331, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

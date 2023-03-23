@@ -5,28 +5,32 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+    //Menu Object
     public GameObject menu;
 
+    //Timer object and timer script
     [SerializeField]
     GameObject timer;
     CountdownTimer this_timer;
 
+    //Position object and position script
     [SerializeField]
     GameObject PositionObj;
     Change_pos pos_script;
 
+    //Game manager object and point system script
     [SerializeField]
     GameObject GameManager;
     PointSystem points_;
 
+    //Text element
     [SerializeField]
     Text textElement;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //menu.SetActive(true);
-
+        //Sets up the scripts to be the appropriate instance of each script 
+        //from the appropriate object
         this_timer = timer.GetComponent<CountdownTimer>();
         pos_script = PositionObj.GetComponent<Change_pos>();
         points_ = GameManager.GetComponent<PointSystem>();
@@ -36,11 +40,10 @@ public class MenuScript : MonoBehaviour
 
     public void ToMenu()
     {
-        //Calculate the average times
-        //Set the text to that
-
         float newAverage = 0.0f;
 
+        //Calculates the mean of all the timing values collected throughout runtime
+        //Aslong as the timings list has more than zero values
         if(pos_script.Timings.Count !=0)
         {
             //Get the mean
@@ -52,37 +55,32 @@ public class MenuScript : MonoBehaviour
             newAverage = newAverage / pos_script.Timings.Count;
         }
 
-        //Give it to the text output
+        //Gives the avarege time it took to reach the goal to the text output
         textElement.text = "Average Time to reach goal : " +  newAverage.ToString();
 
+        //Sets the menu panel to active
         menu.SetActive(true);
+        //Pauses the application
         Time.timeScale = 0.0f;
     }
 
     public void StartApp()
     {
         ResetVariables();
+        //Unpauses the application
+        //and removes the menu oanel from the screen
         menu.SetActive(false);
         Time.timeScale = 1.0f;
     }
 
     public void ResetVariables()
     {
-        //Set all the appropriate things and then run
-        //Timer - Done
-        //Objects - Done
-        //Points
-
-        //-----Timer set----
-        //this_timer.SetTimer(10.0f/*100.0f*/);
+        //Resets the variables for the next instance of the application
         this_timer.ResetTimer();
-        //-----------------
 
-        //-----Positions-----
         pos_script.ResetBox();
         pos_script.ResetOtherObjects();
         pos_script.ResetCollisions();
-        //-------------------
 
         float newAverage = 0;
 
