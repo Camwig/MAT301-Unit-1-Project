@@ -147,8 +147,8 @@ public class Change_pos : MonoBehaviour
             StartTiming = true;
         }
 
-        //Outputs the number of resets to a text element
-        CollisionText.text = "Number of Resets : " +  num_of_cols.ToString();
+        //Outputs the number of collisions to a text element
+        CollisionText.text = "Number of collisions : " +  num_of_cols.ToString();
     }
 
 

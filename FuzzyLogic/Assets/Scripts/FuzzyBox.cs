@@ -1,5 +1,6 @@
 ﻿using FLS;
 using FLS.Rules;
+using FLS.MembershipFunctions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,6 +60,9 @@ public class FuzzyBox : MonoBehaviour
 	private float diffrence_x;
 	private float diffrence_z;
 
+	private float avoidance_x;
+	private float avoidance_z;
+
 	//Multiplier to help control the rate at which force is applied to the box object
 	double speed_ = 0.65;
 
@@ -91,6 +95,10 @@ public class FuzzyBox : MonoBehaviour
 		resultX = engineX.Defuzzify(new { distanceX = (double)this.transform.position.x });
 		resultZ = engineZ.Defuzzify(new { distanceZ = (double)this.transform.position.z });
 
+		//TrapezoidCoGDefuzzification;
+		//CoGDefuzzification;
+		//MoMDefuzzification;
+
 		avoid_result_X = avoidEngineX.Defuzzify(new { Avoidance_distanceX = (double)this.transform.position.x });
 		avoid_result_Z = avoidEngineZ.Defuzzify(new { Avoidance_distanceZ = (double)this.transform.position.z });
 
@@ -110,30 +118,58 @@ public class FuzzyBox : MonoBehaviour
 		Goal_z = Goal.transform.position.z;
 		diffrence_x = 200;
 		diffrence_z = 200;
+		avoidance_x = 6.25f;
+		avoidance_z = 6.25f;
 		Obstacle_X = obstacle_array[pos_in_arr].transform.position.x;
 		Obstacle_Z = obstacle_array[pos_in_arr].transform.position.z;
 
 		// Here we need to setup the Fuzzy Inference System
 		//Sets up the linguistic variable
 		distance_X = new LinguisticVariable("distanceX");
-		//Sets up the shapes for the fuzzy logic graph logic
-		var right_X = distance_X.MembershipFunctions.AddTrapezoid("right_X", Goal_x - diffrence_x, Goal_x - diffrence_x, Goal_x - 5, Goal_x - 1);
-		var none_X = distance_X.MembershipFunctions.AddTrapezoid("none_X", Goal_x - 10, Goal_x - 0.5, Goal_x + 0.5, Goal_x + 10);
-		var left_X = distance_X.MembershipFunctions.AddTrapezoid("left_X", Goal_x + 1, Goal_x + 10, Goal_x + diffrence_x, Goal_x + diffrence_x);
+        //Sets up the shapes for the fuzzy logic graph
 
-		direction_X = new LinguisticVariable("directionX");
-		var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Goal_x + -diffrence_x, Goal_x + -diffrence_x, Goal_x + -5, Goal_x + -1);
-		var none_direction_X = direction_X.MembershipFunctions.AddTrapezoid("none_direction_X", Goal_x + -10, Goal_x + -0.5, Goal_x + 0.5, Goal_x + 10);
-		var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Goal_x + 1, Goal_x + 10, Goal_x + diffrence_x, Goal_x + diffrence_x);
 
-		//Initialise the given engine
-		engineX = new FuzzyEngineFactory().Default();
 
-		//Sets up the variable rules for the engine
-		//Will determine the state of one linguistic variable based off the state of another
-		//So since distance represnts how far from the object the box is
-		//So if the box sits to the right of the goal it should move in the left direction
-		var rule1_X = Rule.If(distance_X.Is(right_X)).Then(direction_X.Is(left_direction_X));
+        //AddTrapezoid
+        var right_X = distance_X.MembershipFunctions.AddTrapezoid("right_X", Goal_x - diffrence_x, Goal_x - diffrence_x, Goal_x - 5, Goal_x - 1);
+        var none_X = distance_X.MembershipFunctions.AddTrapezoid("none_X", Goal_x - 10, Goal_x - 0.5, Goal_x + 0.5, Goal_x + 10);
+        var left_X = distance_X.MembershipFunctions.AddTrapezoid("left_X", Goal_x + 1, Goal_x + 10, Goal_x + diffrence_x, Goal_x + diffrence_x);
+
+        //AddTriangle
+        //var right_X = distance_X.MembershipFunctions.AddTriangle("right_X", Goal_x - diffrence_x, Goal_x - diffrence_x, Goal_x - 1);
+        //var none_X = distance_X.MembershipFunctions.AddTriangle("none_X", Goal_x - 10, Goal_x, Goal_x + 10);
+        //var left_X = distance_X.MembershipFunctions.AddTriangle("left_X", Goal_x + 1, Goal_x + diffrence_x, Goal_x + diffrence_x);
+
+        //AddRectangle
+        //var right_X = distance_X.MembershipFunctions.AddRectangle("right_X", Goal_x - diffrence_x, Goal_x - 1);
+        //var none_X = distance_X.MembershipFunctions.AddRectangle("none_X", Goal_x - 10, Goal_x + 10);
+        //var left_X = distance_X.MembershipFunctions.AddRectangle("left_X", Goal_x + 1, Goal_x + diffrence_x);
+
+        direction_X = new LinguisticVariable("directionX");
+
+        //AddTrapezoid
+        var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Goal_x + -diffrence_x, Goal_x + -diffrence_x, Goal_x + -5, Goal_x + -1);
+        var none_direction_X = direction_X.MembershipFunctions.AddTrapezoid("none_direction_X", Goal_x + -10, Goal_x + -0.5, Goal_x + 0.5, Goal_x + 10);
+        var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Goal_x + 1, Goal_x + 10, Goal_x + diffrence_x, Goal_x + diffrence_x);
+
+        //AddTriangle
+        //var right_direction_X = direction_X.MembershipFunctions.AddTriangle("right_direction_X", Goal_x - diffrence_x, Goal_x - diffrence_x, Goal_x - 1);
+        //var none_direction_X = direction_X.MembershipFunctions.AddTriangle("none_direction_X", Goal_x - 10, Goal_x, Goal_x + 10);
+        //var left_direction_X = direction_X.MembershipFunctions.AddTriangle("left_direction_X", Goal_x + 1, Goal_x + diffrence_x, Goal_x + diffrence_x);
+
+        //AddRectangle
+        //var right_direction_X = direction_X.MembershipFunctions.AddRectangle("right_direction_X", Goal_x - diffrence_x, Goal_x - 1);
+        //var none_direction_X = direction_X.MembershipFunctions.AddRectangle("none_direction_X", Goal_x - 10, Goal_x + 10);
+        //var left_direction_X = direction_X.MembershipFunctions.AddRectangle("left_direction_X", Goal_x + 1, Goal_x + diffrence_x);
+
+        //Initialise the given engine
+        engineX = new FuzzyEngineFactory().Default();
+
+        //Sets up the variable rules for the engine
+        //Will determine the state of one linguistic variable based off the state of another
+        //So since distance represnts how far from the object the box is
+        //So if the box sits to the right of the goal it should move in the left direction
+        var rule1_X = Rule.If(distance_X.Is(right_X)).Then(direction_X.Is(left_direction_X));
 		var rule2_X = Rule.If(distance_X.Is(left_X)).Then(direction_X.Is(right_direction_X));
 		var rule3_X = Rule.If(distance_X.Is(none_X)).Then(direction_X.Is(none_direction_X));
 
@@ -142,10 +178,21 @@ public class FuzzyBox : MonoBehaviour
 
 		//Repeats the same process for diffrent engines
 		Avoidance_distance_X = new LinguisticVariable("Avoidance_distanceX");
-		var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -6.25, Obstacle_X + -6.25, Obstacle_X + -5, Obstacle_X + -1);
-		var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + 6.25, Obstacle_X + 6.25);
 
-		avoidEngineX = new FuzzyEngineFactory().Default();
+
+        //AddTrapezoid
+        var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -avoidance_x, Obstacle_X + -avoidance_x, Obstacle_X + -5, Obstacle_X + -1);
+        var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + avoidance_x, Obstacle_X + avoidance_x);
+
+        //AddTriangle
+        //var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTriangle("right_avoidance_distanceX", Obstacle_X + -avoidance_x, Obstacle_X + -avoidance_x, Obstacle_X + -1);
+        //var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTriangle("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + avoidance_x, Obstacle_X + avoidance_x);
+
+        //AddRectangle
+        //var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddRectangle("right_avoidance_distanceX", Obstacle_X + -avoidance_x, Obstacle_X + -1);
+        //var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddRectangle("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + avoidance_x);
+
+        avoidEngineX = new FuzzyEngineFactory().Default();
 
 		//For the obstacle we want to do the opposite of the goal
 		//as in we want to move away from it 
@@ -156,16 +203,40 @@ public class FuzzyBox : MonoBehaviour
 		avoidEngineX.Rules.Add(rule4_X, rule5_X);
 
 		distance_Z = new LinguisticVariable("distanceZ");
-		var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Goal_z - diffrence_z, Goal_z - diffrence_z, Goal_z - 5, Goal_z - 1);
-		var none_Z = distance_Z.MembershipFunctions.AddTrapezoid("none_Y", Goal_z - 10, Goal_z - 0.5, Goal_z + 0.5, Goal_z + 10);
-		var left_Z = distance_Z.MembershipFunctions.AddTrapezoid("left_Y", Goal_z + 1, Goal_z + 10, Goal_z + diffrence_z, Goal_z + diffrence_z);
 
-		direction_Z = new LinguisticVariable("directionZ");
-		var right_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("right_direction_Y", Goal_z + -diffrence_z, Goal_z + -diffrence_z, Goal_z + -5, Goal_z + -1);
-		var none_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("none_direction_Y", Goal_z + -10, Goal_z + -0.5, Goal_z + 0.5, Goal_z + 10);
-		var left_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("left_direction_Y", Goal_z + 1, Goal_z + 10, Goal_z + diffrence_z, Goal_z + diffrence_z);
+        //AddTrapezoid
+        var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Goal_z - diffrence_z, Goal_z - diffrence_z, Goal_z - 5, Goal_z - 1);
+        var none_Z = distance_Z.MembershipFunctions.AddTrapezoid("none_Y", Goal_z - 10, Goal_z - 0.5, Goal_z + 0.5, Goal_z + 10);
+        var left_Z = distance_Z.MembershipFunctions.AddTrapezoid("left_Y", Goal_z + 1, Goal_z + 10, Goal_z + diffrence_z, Goal_z + diffrence_z);
 
-		engineZ = new FuzzyEngineFactory().Default();
+        //AddTrangle
+        //var right_Z = distance_Z.MembershipFunctions.AddTriangle("right_Y", Goal_z - diffrence_z, Goal_z - diffrence_z, Goal_z - 1);
+        //var none_Z = distance_Z.MembershipFunctions.AddTriangle("none_Y", Goal_z - 10, Goal_z, Goal_z + 10);
+        //var left_Z = distance_Z.MembershipFunctions.AddTriangle("left_Y", Goal_z + 1, Goal_z + diffrence_z, Goal_z + diffrence_z);
+
+        //AddRectangle
+        //var right_Z = distance_Z.MembershipFunctions.AddRectangle("right_Y", Goal_z - diffrence_z, Goal_z - 1);
+        //var none_Z = distance_Z.MembershipFunctions.AddRectangle("none_Y", Goal_z - 10, Goal_z + 10);
+        //var left_Z = distance_Z.MembershipFunctions.AddRectangle("left_Y", Goal_z + 1, Goal_z + diffrence_z);
+
+        direction_Z = new LinguisticVariable("directionZ");
+
+        //AddTrapezoid
+        var right_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("right_direction_Y", Goal_z + -diffrence_z, Goal_z + -diffrence_z, Goal_z + -5, Goal_z + -1);
+        var none_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("none_direction_Y", Goal_z + -10, Goal_z + -0.5, Goal_z + 0.5, Goal_z + 10);
+        var left_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("left_direction_Y", Goal_z + 1, Goal_z + 10, Goal_z + diffrence_z, Goal_z + diffrence_z);
+
+        //AddTriangle
+        //var right_direction_Z = direction_Z.MembershipFunctions.AddTriangle("right_direction_Y", Goal_z - diffrence_z, Goal_z - diffrence_z, Goal_z - 1);
+        //var none_direction_Z = direction_Z.MembershipFunctions.AddTriangle("none_direction_Y", Goal_z - 10, Goal_z, Goal_z + 10);
+        //var left_direction_Z = direction_Z.MembershipFunctions.AddTriangle("left_direction_Y", Goal_z + 1, Goal_z + diffrence_z, Goal_z + diffrence_z);
+
+        //AddRectangle
+        //var right_direction_Z = direction_Z.MembershipFunctions.AddRectangle("right_direction_Y", Goal_z - diffrence_z, Goal_z - 1);
+        //var none_direction_Z = direction_Z.MembershipFunctions.AddRectangle("none_direction_Y", Goal_z - 10, Goal_z + 10);
+        //var left_direction_Z = direction_Z.MembershipFunctions.AddRectangle("left_direction_Y", Goal_z + 1, Goal_z + diffrence_z);
+
+        engineZ = new FuzzyEngineFactory().Default();
 
 		var rule1_Z = Rule.If(distance_Z.Is(right_Z)).Then(direction_Z.Is(left_direction_Z));
 		var rule2_Z = Rule.If(distance_Z.Is(left_Z)).Then(direction_Z.Is(right_direction_Z));
@@ -174,10 +245,20 @@ public class FuzzyBox : MonoBehaviour
 		engineZ.Rules.Add(rule1_Z, rule2_Z, rule3_Z);
 
 		Avoidance_distance_Z = new LinguisticVariable("Avoidance_distanceZ");
-		var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -6.25, Obstacle_Z + -6.25, Obstacle_Z + -5, Obstacle_Z + -1);
-		var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + 6.25, Obstacle_Z + 6.25);
 
-		avoidEngineZ = new FuzzyEngineFactory().Default();
+        //AddTrapezoid
+        var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -avoidance_z, Obstacle_Z + -avoidance_z, Obstacle_Z + -5, Obstacle_Z + -1);
+        var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + avoidance_z, Obstacle_Z + avoidance_z);
+
+        //AddTriangle
+        //var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTriangle("right_avoidance_distanceZ", Obstacle_Z + -avoidance_z, Obstacle_Z + -avoidance_z, Obstacle_Z + -1);
+        //var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTriangle("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + avoidance_z, Obstacle_Z + avoidance_z);
+
+        //AddRectangle
+        //var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddRectangle("right_avoidance_distanceZ", Obstacle_Z + -avoidance_z, Obstacle_Z + -1);
+        //var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddRectangle("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + avoidance_z);
+
+        avoidEngineZ = new FuzzyEngineFactory().Default();
 
 		var rule4_Z = Rule.If(Avoidance_distance_Z.Is(right_avoidance_distance_z)).Then(direction_Z.Is(right_direction_Z));
 		var rule5_Z = Rule.If(Avoidance_distance_Z.Is(left_avoidance_distance_z)).Then(direction_Z.Is(left_direction_Z));
