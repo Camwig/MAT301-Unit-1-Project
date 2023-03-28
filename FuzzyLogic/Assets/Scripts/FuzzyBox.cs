@@ -131,7 +131,7 @@ public class FuzzyBox : MonoBehaviour
 
 
         //AddTrapezoid
-        var right_X = distance_X.MembershipFunctions.AddTrapezoid("right_X", Goal_x - diffrence_x, Goal_x - diffrence_x, Goal_x - 5, Goal_x - 1);
+        var right_X = distance_X.MembershipFunctions.AddTrapezoid("right_X", Goal_x - diffrence_x, Goal_x - diffrence_x, Goal_x - 10, Goal_x - 1);
         var none_X = distance_X.MembershipFunctions.AddTrapezoid("none_X", Goal_x - 10, Goal_x - 0.5, Goal_x + 0.5, Goal_x + 10);
         var left_X = distance_X.MembershipFunctions.AddTrapezoid("left_X", Goal_x + 1, Goal_x + 10, Goal_x + diffrence_x, Goal_x + diffrence_x);
 
@@ -148,7 +148,7 @@ public class FuzzyBox : MonoBehaviour
         direction_X = new LinguisticVariable("directionX");
 
         //AddTrapezoid
-        var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Goal_x + -diffrence_x, Goal_x + -diffrence_x, Goal_x + -5, Goal_x + -1);
+        var right_direction_X = direction_X.MembershipFunctions.AddTrapezoid("right_direction_X", Goal_x + -diffrence_x, Goal_x + -diffrence_x, Goal_x + -10, Goal_x + -1);
         var none_direction_X = direction_X.MembershipFunctions.AddTrapezoid("none_direction_X", Goal_x + -10, Goal_x + -0.5, Goal_x + 0.5, Goal_x + 10);
         var left_direction_X = direction_X.MembershipFunctions.AddTrapezoid("left_direction_X", Goal_x + 1, Goal_x + 10, Goal_x + diffrence_x, Goal_x + diffrence_x);
 
@@ -181,7 +181,7 @@ public class FuzzyBox : MonoBehaviour
 
 
         //AddTrapezoid
-        var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -avoidance_x, Obstacle_X + -avoidance_x, Obstacle_X + -5, Obstacle_X + -1);
+        var right_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("right_avoidance_distanceX", Obstacle_X + -avoidance_x, Obstacle_X + -avoidance_x, Obstacle_X + -1.25, Obstacle_X + -0.25);
         var left_avoidance_distance_x = Avoidance_distance_X.MembershipFunctions.AddTrapezoid("left_avoidance_distanceX", Obstacle_X + 0.25, Obstacle_X + 1.25, Obstacle_X + avoidance_x, Obstacle_X + avoidance_x);
 
         //AddTriangle
@@ -205,7 +205,7 @@ public class FuzzyBox : MonoBehaviour
 		distance_Z = new LinguisticVariable("distanceZ");
 
         //AddTrapezoid
-        var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Goal_z - diffrence_z, Goal_z - diffrence_z, Goal_z - 5, Goal_z - 1);
+        var right_Z = distance_Z.MembershipFunctions.AddTrapezoid("right_Y", Goal_z - diffrence_z, Goal_z - diffrence_z, Goal_z - 10, Goal_z - 1);
         var none_Z = distance_Z.MembershipFunctions.AddTrapezoid("none_Y", Goal_z - 10, Goal_z - 0.5, Goal_z + 0.5, Goal_z + 10);
         var left_Z = distance_Z.MembershipFunctions.AddTrapezoid("left_Y", Goal_z + 1, Goal_z + 10, Goal_z + diffrence_z, Goal_z + diffrence_z);
 
@@ -222,7 +222,7 @@ public class FuzzyBox : MonoBehaviour
         direction_Z = new LinguisticVariable("directionZ");
 
         //AddTrapezoid
-        var right_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("right_direction_Y", Goal_z + -diffrence_z, Goal_z + -diffrence_z, Goal_z + -5, Goal_z + -1);
+        var right_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("right_direction_Y", Goal_z + -diffrence_z, Goal_z + -diffrence_z, Goal_z + -10, Goal_z + -1);
         var none_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("none_direction_Y", Goal_z + -10, Goal_z + -0.5, Goal_z + 0.5, Goal_z + 10);
         var left_direction_Z = direction_Z.MembershipFunctions.AddTrapezoid("left_direction_Y", Goal_z + 1, Goal_z + 10, Goal_z + diffrence_z, Goal_z + diffrence_z);
 
@@ -247,7 +247,7 @@ public class FuzzyBox : MonoBehaviour
 		Avoidance_distance_Z = new LinguisticVariable("Avoidance_distanceZ");
 
         //AddTrapezoid
-        var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -avoidance_z, Obstacle_Z + -avoidance_z, Obstacle_Z + -5, Obstacle_Z + -1);
+        var right_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("right_avoidance_distanceZ", Obstacle_Z + -avoidance_z, Obstacle_Z + -avoidance_z, Obstacle_Z + -1.25, Obstacle_Z + -0.25);
         var left_avoidance_distance_z = Avoidance_distance_Z.MembershipFunctions.AddTrapezoid("left_avoidance_distanceZ", Obstacle_Z + 0.25, Obstacle_Z + 1.25, Obstacle_Z + avoidance_z, Obstacle_Z + avoidance_z);
 
         //AddTriangle
